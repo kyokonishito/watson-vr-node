@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+#IBM Watson Credentials
+ibm-credentials.env
+
+#Others
+.vscode
+

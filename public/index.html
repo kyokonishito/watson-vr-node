@@ -1,0 +1,445 @@
+<html>
+
+<head>
+    <title>IBM Watson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-qriously@1.1.1/dist/vue-qriously.min.js"></script>
+
+    <!--- check and select from https://www.bootstrapcdn.com/bootswatch/ -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/sketchy/bootstrap.min.css" rel="stylesheet" integrity="sha384-N8DsABZCqc1XWbg/bAlIDk7AS/yNzT5fcKzg/TwfmTuUqZhGquVmpb5VvfmLcMzp" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/sandstone/bootstrap.min.css" rel="stylesheet" integrity="sha384-G3Fme2BM4boCE9tHx9zHvcxaQoAkksPQa/8oyn1Dzqv7gdcXChereUsXGx6LtbqA" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/materia/bootstrap.min.css" rel="stylesheet" integrity="sha384-SYbiks6VdZNAKT8DNoXQZwXAiuUo5/quw6nMKtFlGO/4WwxW86BSTMtgdzzB9JJl" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet" integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-C++cugH8+Uf86JbNOnQoBweHHAe/wVKN/mb0lTybu/NZ9sEYbd+BbbYtNpWYAsNP" crossorigin="anonymous">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/spacelab/bootstrap.min.css" rel="stylesheet" integrity="sha384-sZG5VVk41YqhJjYXgJFoRVd3d2AdDgy4oyIytQJMGx/Mizz1N+5bgKQBSCGfKQnP" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-w6tc0TXjTUnYHwVwGgnYyV12wbRoJQo9iMlC2KdkdmVvntGgzT9jvqNEF/uKaF4m" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/superhero/bootstrap.min.css" rel="stylesheet" integrity="sha384-LS4/wo5Z/8SLpOLHs0IbuPAGOWTx30XSoZJ8o7WKH0UJhRpjXXTpODOjfVnNjeHu" crossorigin="anonymous"> -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-w+8Gqjk9Cuo6XH9HKHG5t5I1VR4YBNdPt/29vwgfZR485eoEJZ8rJRbm3TR32P6k" crossorigin="anonymous">-->
+</head>
+
+<body>
+        
+    <div class="container">
+        <div id="app">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1> <img src="https://pbs.twimg.com/profile_images/1068415058445664257/97dQDR6b_400x400.jpg" width="50" alt="IBM Code Tokyo" />
+                         Watson Visual Recognition</h1>
+                
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="card border-info col-sm-12 col-md-6" >
+                    <div class="card-header"> --- Photo --- 認識させる写真 </div>
+                    <div class="card-body" >
+
+                        <div id="preview">
+                            <img v-if="fileurl" :src="fileurl" width="300" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="form-group">
+
+
+
+                    <input type="file" @change="onFileChange" class="form-control-file" name="inputFile" accept="image/*" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">上のボタンをクリックして写真を選ぶか、クリック後カメラボタンをクリックし撮影して上記に写真を表示させてください</small>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <button type="button" @click="onDetectFaces" class="btn btn-primary">Watson 年齢・性別の判定</button>
+
+
+            </div>
+            <div class="row">
+                    <div class="col-sm-5" v-show="loadingDetectFaces">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped  bg-danger progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 100%">
+                                Loading......
+                
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                    <div v-show="!loadingDetectFaces && displayResults1" >
+                        <p v-if="!isClassified1">
+                                <span v-html="noClassMassage1"></span>
+                        </p>        
+                        <p v-else-if="!isFace">
+                                <span v-html="noFaceMassage"></span>
+                        </p>
+                        <span  v-else>
+                            <img :src="'data:image/png;base64,'+ answerDetectFaces.base64img" width="300"/>
+
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">番号</th>
+                                    <th scope="col">性別</th>
+                                    <th scope="col">性別_確信度</th>
+                                    <th scope="col">年齢_Max</th>
+                                    <th scope="col">年齢_Min</th>
+                                    <th scope="col">年齢_確信度</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr scope="row" v-for="(item, index) in answerDetectFaces.images[0].faces">
+                                        <td>
+                                            <span v-html="index"></span>
+                                        </td>
+                                        <td>
+                                            <span v-html="item.gender.gender_label"></span>
+                                        </td>
+                                        <td align="center">
+                                            <span v-html="Math.round(item.gender.score*1000)/10"></span>&#037;
+                                        </td>
+                                        <td>
+                                            <span v-html="item.age.max"></span>
+                                        </td>
+                                        <td>
+                                            <span v-html="item.age.min"></span>
+                                        </td>
+                                        <td align="center">
+                                            <span v-html="Math.round(item.age.score*1000)/10"></span>&#037;
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                        </p>
+                    </div>
+             </div>
+    
+            <div class="row">
+                <p> </p>
+            </div>
+            <div class="row">
+                
+                    <button type="button" @click="classifyImages" class="btn btn-primary">Watsonで認識（Watson学習済みモデルを利用）</button>
+               
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-5" v-show="loadingClassifyImages">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped  bg-danger progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 100%">
+                            Loading......
+            
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div v-show="!loadingClassifyImages  && displayResults2" >
+                    <p v-if="!isClassified2">
+                            <span v-html="noClassMassage2"></span>
+                    </p>
+                    <p v-else>
+                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">認識結果 class</th>
+                                    <th scope="col">確信度 score</th>
+                                    <th scope="col">タイプ type_hierarchy</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr scope="row" v-for="item in imageClasses">
+                                        <td>
+                                            <span v-html="item.class"></span>
+                                        </td>
+                                        <td align="center">
+                                            <span v-html="Math.round(item.score*1000)/10"></span>&#037;
+                                        </td>
+                                        <td>
+                                            <span v-html="item.type_hierarchy"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </p>
+
+                    
+                    
+                </div>
+            </div>
+            <div class="row">
+                    <p> </p>
+                </div>
+            <div class="row">
+
+                    <button type="button" @click="classifyCustomImages" class="btn btn-primary">Watsonで認識（カスタムモデルを利用）</button>
+    
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-5" v-show="loadingClassifyCustomImages" >
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped  bg-danger progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 100%">
+                                Loading......
+                
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                    <div v-show="!loadingClassifyCustomImages && displayResults3">
+                        <p v-if="!isClassified3">
+                            <span v-html="noClassMassage3"></span>
+                        </p>
+                        <p v-else>
+                    
+                    
+                    
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">認識結果 class</th>
+                                        <th scope="col">確信度 score</th>
+                    
+                                    </tr>
+                    
+                                </thead>
+                                <tbody>
+                                    <tr scope="row" v-for="item in imageCustomClasses">
+                                        <td>
+                                            <span v-html="item.class"></span>
+                                        </td>
+                                        <td align="center">
+                                            <span v-html="Math.round(item.score*1000)/10"></span>&#037;
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p>
+                    
+                    
+                    
+                    </div>
+                </div>
+    
+            <div class="row">
+                <p> </p>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12" >
+                    このページのQRコード：<span v-html="url_value"></span>
+                </div>
+                <div class="col-sm-12">
+                    <qriously :value="url_value" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript"> 
+        
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                fileurl: null,
+                url_value: location.href,
+                file: null,
+                loadingClassifyImages: false,
+                answerClassifyImages: null,
+                loadingDetectFaces: false,
+                answerDetectFaces: null,
+                loadingClassifyCustomImages: false,
+                answerClassifyCustomImages: null,
+                displayResults1: false,
+                displayResults2: false,
+                displayResults3: false,
+                isFace: false,
+                noFaceMassage: null,
+                isClassified1: false,
+                isClassified2: false,
+                isClassified3: false,
+                noClassMassage1: null,
+                noClassMassage2: null,
+                noClassMassage3: null,
+                imageClasses: [],
+                imageCustomClasses: []
+
+                
+            },
+            methods: {
+                
+                onFileChange(e) {
+                    this.file = e.target.files[0];
+                    this.fileurl = URL.createObjectURL(this.file);
+                    this.displayResults1 = false
+                    this.displayResults2 = false
+                    this.displayResults3 = false
+                    this.isFace = false
+                    this.noFaceMassage = null
+                    this.isClassified1 = false
+                    this.isClassified2 = false
+                    this.isClassified3 = false
+                    this.noClassMassage1 = null
+                    this.noClassMassage2 = null
+                    this.noClassMassage3 = null
+                },
+                 
+                onDetectFaces(e) {
+                
+                    this.detectFaces();
+                }, 
+
+                onClassifyImages(e) {
+                
+                    this.classifyImages();
+                }, 
+
+                onClassifyCustomImages(e) {
+                
+                    this.classifyCustomImages();
+                }, 
+
+
+                async detectFaces(){
+                    var url ="./detectFaces"
+
+                    var params = new FormData();
+
+                    params.append('file', this.file);
+
+                    try {
+                        this.loadingDetectFaces = true
+
+                        const response = await axios.post(url, params)
+                        this.answerDetectFaces = response.data
+                        if ( response.data.errMsg ){
+                            this.isClassified1 = false;
+                            this.noClassMassage1 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
+
+                        } else if (this.answerDetectFaces.images[0].faces.length == 0 ){
+                            this.isClassified1 = true;
+                            this.isFace = false;
+                            this.noFaceMassage = '人の顔が検出できませんでした'
+
+                        } else {
+                            this.isClassified1 = true;
+                            this.isFace = true;
+                        }
+                        console.log(response);
+                        console.log(this.answerDetectFaces);
+
+                    } catch(e){
+                        console.log('ERR!');
+                        console.log(e);
+                        this.answer = 'ERR!:' + e
+                    } finally {
+                        this.loadingDetectFaces = false
+                        this.displayResults1 = true
+                    }
+                },
+
+                async classifyImages(){
+                    var url ="./classifyImages"
+
+                    var params = new FormData();
+
+                    params.append('file', this.file);
+
+                    try {
+                        this.loadingClassifyImages = true
+
+                        const response = await axios.post(url, params)
+                        this.answerClassifyImages = JSON.stringify(response.data)
+                        if ( response.data.errMsg ){
+                            this.isClassified2 = false;
+                            this.noClassMassage2 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
+
+                        } else {
+                            this.imageClasses = response.data.images[0].classifiers[0].classes
+                            
+                            this.imageClasses.sort(function(a, b) {
+                                return (b.score > a.score) ? 1 : ((b.score < a.score) ? -1 : 0)
+                            });
+                            this.isClassified2 = true;
+                        } 
+                        console.log(response);
+                        console.log(this.answerClassifyImages);
+
+                    } catch(e){
+                        console.log('ERR!');
+                        console.log(e);
+                        this.answer = 'ERR!:' + e
+                    } finally {
+                        this.loadingClassifyImages = false
+                        this.displayResults2 = true
+                    }
+                },
+
+                async classifyCustomImages(){
+                    var url ="./classifyCustomImages"
+
+                    var params = new FormData();
+
+                    params.append('file', this.file);
+
+                    try {
+                        this.loadingClassifyCustomImages = true
+
+                        const response = await axios.post(url, params)
+                        this.answerClassifyCustomImages = JSON.stringify(response.data)
+                        if ( response.data.errMsg ){
+                            this.isClassified3 = false;
+                            this.noClassMassage3 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
+
+                        } else {
+                            this.imageCustomClasses = response.data.images[0].classifiers[0].classes
+                            
+                            this.imageCustomClasses.sort(function(a, b) {
+                                return (b.score > a.score) ? 1 : ((b.score < a.score) ? -1 : 0)
+                            });
+
+                            if (this.imageCustomClasses.length == 0 ){
+                                this.isClassified3 = false;
+                                this.noClassMassage3 = 'あてはまるものがありませんでした'
+
+                            } else this.isClassified3 = true;
+                        }
+                        console.log(response);
+                        console.log(this.answerClassifyCustomImages);
+
+                    } catch(e){
+                        console.log('ERR!');
+                        console.log(e);
+                        this.answer = 'ERR!:' + e
+                    } finally {
+                        this.loadingClassifyCustomImages = false
+                        this.displayResults3 = true
+                    }
+
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

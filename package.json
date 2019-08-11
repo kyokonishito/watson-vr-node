@@ -1,0 +1,30 @@
+{
+  "name": "node-vr",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "async": "^3.1.0",
+    "body-parser": "~1.18.3",
+    "canvas": "^2.5.0",
+    "config": "^3.0.1",
+    "dotenv": "^6.2.0",
+    "express": "~4.16.0",
+    "formidable": "^1.2.1",
+    "ibm-watson": "^4.3.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "sharp": "^0.23.0"
+  },
+  "repository": {},
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "Apache-2.0",
+  "description": ""
+}
