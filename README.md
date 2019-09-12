@@ -99,7 +99,7 @@ watson-vr-nodeフォルダにある`manifest.yml`を2箇所変更して保存し
 Visual RecognitionのカスタムクラスのIDを記入します。
 
 2で[Watson Visual Recognition カスタムクラスを作ろう!](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815)を参照してカスタムクラスを作成した場合は、
-[11. モデルの表示](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815#11-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E8%A1%A8%E7%A4%BA) と[11. Classifier IDの取得](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815#12-classifier-id%E3%81%AE%E5%8F%96%E5%BE%97)の手順に従い、Classifier IDをコピーしペーストします。
+[11. モデルの表示](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815#11-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E8%A1%A8%E7%A4%BA) と[12. Classifier IDの取得](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815#12-classifier-id%E3%81%AE%E5%8F%96%E5%BE%97)の手順に従い、Classifier IDをコピーしペーストします。
 
 
 カスタムクラスを作成していない場合は、IBMが提供している食物に特化したカスタムクラスのid,`food`を記入します。前後の`<>`は不要です。<br/>
