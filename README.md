@@ -3,13 +3,14 @@ IBM Watson Visual Recognitionを使ったnode.jsの画像認識Webアプリで�
 
 ## 1. 事前準備
 ### 1. IBM Cloudのアカウントを取得
-お持ちでないかたは 
-<a href="https://cloud.ibm.com/registration?cm_mmc=Email_Events-_-Developer_Innovation-_-WW_WW-_-nishito\tokyo\japan&cm_mmca1=000019RS&cm_mmca2=10004805&cm_mmca3=M99938765&cvosrc=email.Events.M99938765&cvo_campaign=000019RS" target="_blank">こちら</a>から取得お願いします。
-取得方法の動画はこちらです: <a href="https://youtu.be/Krn1jQ4iy_s" target="_blank">https://youtu.be/Krn1jQ4iy_s</a>
+お持ちでないかたは [こちら](https://cloud.ibm.com/registration?cm_mmc=Email_Events-_-Developer_Innovation-_-WW_WW-_-nishito\tokyo\japan&cm_mmca1=000019RS&cm_mmca2=10004805&cm_mmca3=M99938765&cvosrc=email.Events.M99938765&cvo_campaign=000019RS
+)から取得お願いします。
+
+取得方法の動画はこちらです: https://youtu.be/Krn1jQ4iy_s
 
 ### 2. IBM CloudのCLIをインストール
 ### 2-1)  
-<a href="https://cloud.ibm.com/docs/cli/reference/ibmcloud?topic=cloud-cli-install-ibmcloud-cli#install_use " target="_blank">こちら</a>にアクセスし、"スタンドアロン IBM Cloud CLI のインストール"に従い、①、②、③、④をご利用されているOSに合わせて実行してください。(windowsは再起動が必要です)
+https://cloud.ibm.com/docs/cli/reference/ibmcloud?topic=cloud-cli-install-ibmcloud-cli#install_use  にアクセスし、"スタンドアロン IBM Cloud CLI のインストール"に従い、①、②、③、④をご利用されているOSに合わせて実行してください。(windowsは再起動が必要です)
 
 
 ### 2-2)  以下のコマンドを実行し、必要なツールのインストールが完了しているか検証を行ってください。
@@ -51,9 +52,9 @@ OK
 ## 2. Visual Recognition サービスの作成
 Visual Recognition サービスを作成していない場合は、作成します。既に作成済みであれば、作成済みのものを使用できます。
 
->画面イメージのある手順を参照したい場合は<a href="https://qiita.com/nishikyon/items/9b8f697db7ad0a693839" target="_blank">Watson APIを使うための前準備: サービスの作成と資格情報の取得</a> の[1. Watson サービスの作成](href="https://qiita.com/nishikyon/items/9b8f697db7ad0a693839#1-watson-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E4%BD%9C%E6%88%90")を参照して下さい (`2. サービスの資格情報取得`は実施不要です)。以下の`6. (オプション) カスタム分類クラスの作成` はその後に実施ください。
+>画面イメージのある手順を参照したい場合は[Watson APIを使うための前準備: サービスの作成と資格情報の取得](https://qiita.com/nishikyon/items/9b8f697db7ad0a693839)の[1. Watson サービスの作成](https://qiita.com/nishikyon/items/9b8f697db7ad0a693839#1-watson-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E4%BD%9C%E6%88%90)を参照して下さい (`2. サービスの資格情報取得`は実施不要です)。以下の`6. (オプション) カスタム分類クラスの作成` はその後に実施ください。
 
-1. <a href="https://cloud.ibm.com/login" target="_blank">https://cloud.ibm.com/login</a>よりIBM Cloudにログイン
+1. https://cloud.ibm.com/login よりIBM Cloudにログイン
 
 2. 表示された「ダッシュボード」の上部のメニュー「カタログ」をクリック
 
@@ -68,7 +69,7 @@ Visual Recognition サービスを作成していない場合は、作成しま�
 自分の写真で分類クラスを作成したい場合は実施してください。
 >こちらは省略可能です。省略した場合はIBMが提供する食品に特化した分類クラス`food`を使用します。
 
-<a href="https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815" target="_blank">Watson Visual Recognition カスタムクラスを作ろう!</a>を参照してカスタム分類クラスの作成を行ってください。
+[Watson Visual Recognition カスタムクラスを作ろう!](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815)を参照してカスタム分類クラスの作成を行ってください。
 [10. トレーニング開始](https://qiita.com/nishikyon/items/7d1c07e2f50c1002e815#10-%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E9%96%8B%E5%A7%8B)まで実施お願いします。
 
 
@@ -149,7 +150,7 @@ Visual Recognitionとのバインドが済んでいないため、開始する�
 
 IBM CloudのCloud Foundry アプリケーションと　IBM Cloud上のサービスを接続(bind)すると、資格情報や接続情報が連携され、個別に設定する必要がなくなります。
 
-> 画面イメージのある手順を参照したい場合は<a href="https://qiita.com/nishikyon/items/0e21fdabcd7f8966bb24" target="_blank">IBM Cloud: Cloud Foundry アプリケーションとサービスの接続</a>を参照して下さい
+> 画面イメージのある手順を参照したい場合は[IBM Cloud: Cloud Foundry アプリケーションとサービスの接続](https://qiita.com/nishikyon/items/0e21fdabcd7f8966bb24)を参照して下さい
 
 1. https://cloud.ibm.com/login よりIBM Cloudにログイン
 
