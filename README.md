@@ -1,6 +1,8 @@
 # watson-vr-node
 IBM Watson Visual Recognitionを使ったnode.jsの画像認識Webアプリです。
 
+>2019/09/13: Detect Faces のメソッドが削除されたため、取り急ぎ顔認証部分のUIはコメントアウトして表示しないように変更しました。
+
 ## 1. 事前準備
 ### 1. IBM Cloudのアカウントを取得
 お持ちでないかたは [こちら](https://cloud.ibm.com/registration?cm_mmc=Email_Events-_-Developer_Innovation-_-WW_WW-_-nishito\tokyo\japan&cm_mmca1=000019RS&cm_mmca2=10004805&cm_mmca3=M99938765&cvosrc=email.Events.M99938765&cvo_campaign=000019RS
@@ -176,9 +178,6 @@ IBM CloudのCloud Foundry アプリケーションと　IBM Cloud上のサービ
 1. アプリケーションが稼働中になったら、`アプリ URL にアクセス`をクリックする。
 アプリケーションの画面が表示されます。
 `「ファイルの選択」`から写真を選んだ後、各青ボタンをクリックして、Visual Recognitionの結果を確認します。
-
-- Watson 年齢・性別の判定:
-  - Watsoが人の顔と認識したら推定される年齢と性別、その位置を表示します。
 
 - Watsonで認識（Watson学習済みモデルを利用):
   -W atsonが写真を認識した内容を表示します。
