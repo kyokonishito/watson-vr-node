@@ -6,14 +6,12 @@ var methodOverride = require('method-override');
 var logger = require('morgan');
 var classifyImages = require('./routes/classifyImages')
 
-
 var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(methodOverride('_method'));
 
-app.use('/detectFaces', classifyImages);
 app.use('/classifyImages', classifyImages);
 app.use('/classifyCustomImages', classifyImages);
 app.use(express.static(path.join(__dirname + '/public')));

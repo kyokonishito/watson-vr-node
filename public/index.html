@@ -57,74 +57,6 @@
 
                 </div>
             </div>
-
-
-            <!-- <div class="row">
-
-                <button type="button" @click="onDetectFaces" class="btn btn-primary">Watson 年齢・性別の判定</button>
-
-
-            </div>
-            <div class="row">
-                    <div class="col-sm-5" v-show="loadingDetectFaces">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped  bg-danger progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                aria-valuemax="100" style="width: 100%">
-                                Loading......
-                
-                            </div>
-                        </div>
-                    </div>
-                
-                
-                    <div v-show="!loadingDetectFaces && displayResults1" >
-                        <p v-if="!isClassified1">
-                                <span v-html="noClassMassage1"></span>
-                        </p>        
-                        <p v-else-if="!isFace">
-                                <span v-html="noFaceMassage"></span>
-                        </p>
-                        <span  v-else>
-                            <img :src="'data:image/png;base64,'+ answerDetectFaces.base64img" width="300"/>
-
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">番号</th>
-                                    <th scope="col">性別</th>
-                                    <th scope="col">性別_確信度</th>
-                                    <th scope="col">年齢_Max</th>
-                                    <th scope="col">年齢_Min</th>
-                                    <th scope="col">年齢_確信度</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr scope="row" v-for="(item, index) in answerDetectFaces.images[0].faces">
-                                        <td>
-                                            <span v-html="index"></span>
-                                        </td>
-                                        <td>
-                                            <span v-html="item.gender.gender_label"></span>
-                                        </td>
-                                        <td align="center">
-                                            <span v-html="Math.round(item.gender.score*1000)/10"></span>&#037;
-                                        </td>
-                                        <td>
-                                            <span v-html="item.age.max"></span>
-                                        </td>
-                                        <td>
-                                            <span v-html="item.age.min"></span>
-                                        </td>
-                                        <td align="center">
-                                            <span v-html="Math.round(item.age.score*1000)/10"></span>&#037;
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                        </p>
-                    </div>
-             </div> -->
     
             <div class="row">
                 <p> </p>
@@ -264,19 +196,12 @@
                 file: null,
                 loadingClassifyImages: false,
                 answerClassifyImages: null,
-                loadingDetectFaces: false,
-                answerDetectFaces: null,
                 loadingClassifyCustomImages: false,
                 answerClassifyCustomImages: null,
-                displayResults1: false,
                 displayResults2: false,
                 displayResults3: false,
-                isFace: false,
-                noFaceMassage: null,
-                isClassified1: false,
                 isClassified2: false,
                 isClassified3: false,
-                noClassMassage1: null,
                 noClassMassage2: null,
                 noClassMassage3: null,
                 imageClasses: [],
@@ -289,24 +214,14 @@
                 onFileChange(e) {
                     this.file = e.target.files[0];
                     this.fileurl = URL.createObjectURL(this.file);
-                    this.displayResults1 = false
                     this.displayResults2 = false
                     this.displayResults3 = false
-                    this.isFace = false
-                    this.noFaceMassage = null
-                    this.isClassified1 = false
                     this.isClassified2 = false
                     this.isClassified3 = false
-                    this.noClassMassage1 = null
                     this.noClassMassage2 = null
                     this.noClassMassage3 = null
                 },
                  
-                onDetectFaces(e) {
-                
-                    this.detectFaces();
-                }, 
-
                 onClassifyImages(e) {
                 
                     this.classifyImages();
@@ -316,45 +231,6 @@
                 
                     this.classifyCustomImages();
                 }, 
-
-
-                async detectFaces(){
-                    var url ="./detectFaces"
-
-                    var params = new FormData();
-
-                    params.append('file', this.file);
-
-                    try {
-                        this.loadingDetectFaces = true
-
-                        const response = await axios.post(url, params)
-                        this.answerDetectFaces = response.data
-                        if ( response.data.errMsg ){
-                            this.isClassified1 = false;
-                            this.noClassMassage1 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
-
-                        } else if (this.answerDetectFaces.images[0].faces.length == 0 ){
-                            this.isClassified1 = true;
-                            this.isFace = false;
-                            this.noFaceMassage = '人の顔が検出できませんでした'
-
-                        } else {
-                            this.isClassified1 = true;
-                            this.isFace = true;
-                        }
-                        console.log(response);
-                        console.log(this.answerDetectFaces);
-
-                    } catch(e){
-                        console.log('ERR!');
-                        console.log(e);
-                        this.answer = 'ERR!:' + e
-                    } finally {
-                        this.loadingDetectFaces = false
-                        this.displayResults1 = true
-                    }
-                },
 
                 async classifyImages(){
                     var url ="./classifyImages"
@@ -367,13 +243,13 @@
                         this.loadingClassifyImages = true
 
                         const response = await axios.post(url, params)
-                        this.answerClassifyImages = JSON.stringify(response.data)
+                        this.answerClassifyImages = JSON.stringify(response.response)
                         if ( response.data.errMsg ){
                             this.isClassified2 = false;
                             this.noClassMassage2 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
 
                         } else {
-                            this.imageClasses = response.data.images[0].classifiers[0].classes
+                            this.imageClasses = response.data.result.images[0].classifiers[0].classes
                             
                             this.imageClasses.sort(function(a, b) {
                                 return (b.score > a.score) ? 1 : ((b.score < a.score) ? -1 : 0)
@@ -410,7 +286,7 @@
                             this.noClassMassage3 = 'ERROR: ' + JSON.stringify(response.data.errMsg);
 
                         } else {
-                            this.imageCustomClasses = response.data.images[0].classifiers[0].classes
+                            this.imageCustomClasses = response.data.result.images[0].classifiers[0].classes
                             
                             this.imageCustomClasses.sort(function(a, b) {
                                 return (b.score > a.score) ? 1 : ((b.score < a.score) ? -1 : 0)
