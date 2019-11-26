@@ -148,6 +148,9 @@ ibmcloud cf push --no-start
 ```
 Visual Recognitionとのバインドが済んでいないため、開始するとエラーになるため、`--no-start`オプションで開始しないようにしています。
 
+> ５のバインド実施後に再プッシュする場合(CLASSIFIER_IDを変更する場合など）は`--no-start`オプションは付けないで実行してください。
+> `ibmcloud cf push`
+
 ## 5. Visual Recognition サービスのバインドとアプリケーションの開始
 
 IBM CloudのCloud Foundry アプリケーションと　IBM Cloud上のサービスを接続(bind)すると、資格情報や接続情報が連携され、個別に設定する必要がなくなります。
