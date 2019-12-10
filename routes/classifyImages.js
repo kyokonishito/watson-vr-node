@@ -9,6 +9,14 @@ if (!CLASSIFIER_ID){
     CLASSIFIER_ID = 'food';
 }
 
+//SDKバグ対応 for Openshift Workshop用 (local環境ではibm-credentials.envを要修正)
+if (!process.env.WATSON_VISION_COMBINED_APIKEY && process.env.VISUAL_RECOGNITION_APIKEY) {
+    process.env.WATSON_VISION_COMBINED_APIKEY = process.env.VISUAL_RECOGNITION_APIKEY
+    process.env.WATSON_VISION_COMBINED_IAM_APIKEY = process.env.VISUAL_RECOGNITION_IAM_APIKEY
+    process.env.WATSON_VISION_COMBINED_URL = process.env.VISUAL_RECOGNITION_URL
+    process.env.WATSON_VISION_COMBINED_AUTH_TYPE = process.env.VISUAL_RECOGNITION_AUTH_TYPE
+}
+
 //SDKでインスタンス作成, API_KEYはIBM Cloud上のCloudFoundry環境はバインドしていれば自動で環境変数から読み込み
 //それ以外の環境はibm-credentials.envから読み込む。
 //ibm-credentials.envはIBM CloudのVisual Recognitionサービスの管理画面からダウンロード可能。
