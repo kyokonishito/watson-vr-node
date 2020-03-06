@@ -22,6 +22,9 @@
     "node": "10.x"
   },
   "main": "app.js",
+  "scripts": {
+    "start": "LD_PRELOAD='/opt/app-root/src/node_modules/sharp/vendor/lib/libz.so' node app.js"
+  },
   "devDependencies": {},
   "author": "",
   "license": "Apache-2.0",
