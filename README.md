@@ -12,7 +12,7 @@ IBM Watson Visual Recognitionを使ったnode.jsの画像認識Webアプリで�
 
 ### 2. IBM CloudのCLIをインストール
 ### 2-1)  
-https://cloud.ibm.com/docs/cli/reference/ibmcloud?topic=cloud-cli-install-ibmcloud-cli#install_use  にアクセスし、"スタンドアロン IBM Cloud CLI のインストール"に従い、①、②、③、④をご利用されているOSに合わせて実行してください。(windowsは再起動が必要です)
+https://cloud.ibm.com/docs/cli/reference/ibmcloud?topic=cloud-cli-install-ibmcloud-cli にアクセスし、"インストーラーを使用したインストール" または"シェルからのインストール"　をご利用されているOSに合わせて実行してください。
 
 
 ### 2-2)  以下のコマンドを実行し、必要なツールのインストールが完了しているか検証を行ってください。
@@ -60,7 +60,7 @@ Visual Recognition サービスを作成していない場合は、作成しま�
 
 2. 表示された「ダッシュボード」の上部のメニュー「カタログ」をクリック
 
-3. 表示された「カタログ」の上部の検索フィールドに`Visual Recognition`と入力し、「検索」ボタンをクリック。
+3. 表示された「カタログ」の上部の検索フィールドに`Visual Recognition`と入力し、「Enter」キーをクリック。
 
 4. 表示された AIカテゴリの`Visual Recognition`をクリック。
 
