@@ -62,7 +62,7 @@ Visual Recognition サービスを作成していない場合は、作成しま�
 
 3. 表示された「カタログ」の上部の検索フィールドに`Visual Recognition`と入力し、「Enter」キーをクリック。
 
-4. 表示された AIカテゴリの`Visual Recognition`をクリック。
+4. 表示された サービス・AIカテゴリの`Visual Recognition`をクリック。
 
 5. `Visual Recognition`サービス作成の画面が表示されるので、右側のの'作成'をクリックして、サービスを作成する。
 
@@ -159,9 +159,9 @@ IBM CloudのCloud Foundry アプリケーションと　IBM Cloud上のサービ
 
 1. https://cloud.ibm.com/login よりIBM Cloudにログイン
 
-2. 表示されたダッシュボードの[リソースの要約]から`リソースの表示`をクリックする。
+2. 表示されたダッシュボードの[リソースの要約]から`全て表示`をクリックする。
 
-3. `Cloud Foundry アプリ`の文字をクリックする。
+3. `Cloud Foundry アプリ`の先頭の`v`をクリックする。
 
 4. `4. アプリケーションのIBM Cloudへのデプロイ`の` 1. manifest.ymlの編集`で設定したアプリケーション名が表示されているので、そのアプリケーション名をクリックする。
 
